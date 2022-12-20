@@ -32,12 +32,13 @@ jobs:
         uses: actions/checkout@v3
       - name: Build
         uses: actions/setup-node@v3
-        env:
-          PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
+
         with:
           node-version: 18
       - run: cd front_end && npm install
-      - run: cd front_end && npm run build
+      - run: cd front_end && npm run build && cat $PUBLIC_API_URL
+        env:
+          PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
