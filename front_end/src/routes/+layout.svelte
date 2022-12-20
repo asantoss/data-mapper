@@ -3,11 +3,21 @@
 	import { env as public_env } from '$env/dynamic/public';
 	import { parserStore } from '$lib/stores';
 	import { theme } from '$lib/stores';
+	import { onMount } from 'svelte';
 	export const prerender = true;
 	const apiUrl = public_env.PUBLIC_API_URL ?? '';
 	let fileInput: HTMLInputElement;
+	let configs: string[] = [];
+	let config: string;
+	onMount(() => {
+		const localConfigs = JSON.parse(localStorage.getItem('configs') ?? '{}');
+		configs = Object.keys(localConfigs);
+		if (config in localConfigs) {
+			loadConfig(config);
+		}
+	});
+
 	async function handleSubmit(event: Event) {
-		console.log('API URL', apiUrl);
 		event.preventDefault();
 		if (event.target) {
 			const { files } = <HTMLInputElement>event?.target;
@@ -31,6 +41,12 @@
 			};
 		}
 	}
+	async function handleSaveConfig() {
+		const name = window.prompt('Please type a config name!') ?? 'Name';
+		const configs = JSON.parse(localStorage.getItem('configs') ?? '{}');
+		configs[name] = $parserStore.columns;
+		localStorage.setItem(name, JSON.stringify(configs));
+	}
 
 	async function processFile() {
 		if (fileInput?.files) {
@@ -52,6 +68,11 @@
 			a.remove(); //afterwards we remove the element again
 		}
 	}
+	function loadConfig(config: string) {
+		const localConfigs = JSON.parse(localStorage.getItem('configs') ?? '{}');
+		const tartgetConf = localConfigs[config];
+		$parserStore.columns = tartgetConf;
+	}
 </script>
 
 <div class="min-h-full">
@@ -65,6 +86,13 @@
 							<option value="system">System</option>
 							<option value="light">Light</option>
 							<option value="dark">Dark</option>
+						</select>
+					</div>
+					<div class="ml-auto">
+						<select bind:value={config}>
+							{#each configs as conf}
+								<option value={conf}>conf </option>
+							{/each}
 						</select>
 					</div>
 				</div>
@@ -162,6 +190,12 @@
 							on:click={processFile}
 							class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 							>Process</button
+						>
+						<button
+							type="button"
+							on:click={handleSaveConfig}
+							class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+							>Save Config</button
 						>
 					</div>
 				</div>
