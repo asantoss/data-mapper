@@ -36,7 +36,7 @@ jobs:
           node-version: 18
       - run: cd front_end && npm install
       - run: cd front_end && npm run build
-      - run: mv front_end/build/* ../docs/
+      - run: mv front_end/build/* ./docs/
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
