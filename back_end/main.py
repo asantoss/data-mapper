@@ -55,8 +55,11 @@ def proccess_file(file: UploadFile, data: str = Form()):
     file_contents = BytesIO(contents)
     df = pd.read_csv(file_contents)
     df = df.fillna('')
-    for col in cols_to_dedupe:
-        df.drop_duplicates(col, inplace=True)
+    try:
+        for col in cols_to_dedupe:
+            df.drop_duplicates(col, keep="first", inplace=True)
+    except NameError:
+        print(NameError)
     df.drop(columns=cols_to_drop, inplace=True)
     df.rename(columns=cols_to_rename, inplace=True)
     file_contents.close()

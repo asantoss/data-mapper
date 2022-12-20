@@ -25,7 +25,8 @@
 				columns: data.columns.map((e: string) => ({
 					name: e,
 					value: e,
-					deleted: false
+					deleted: false,
+					drop_dupes: false
 				}))
 			};
 		}
