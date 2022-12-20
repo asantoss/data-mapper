@@ -3,19 +3,10 @@
 	import { env as public_env } from '$env/dynamic/public';
 	import { parserStore } from '$lib/stores';
 	import { theme } from '$lib/stores';
-	import { onMount } from 'svelte';
 	export const prerender = true;
 	const apiUrl = public_env.PUBLIC_API_URL ?? '';
 	let fileInput: HTMLInputElement;
 	let configs: string[] = [];
-	let config: string;
-	onMount(() => {
-		const localConfigs = JSON.parse(localStorage.getItem('configs') ?? '{}');
-		configs = Object.keys(localConfigs);
-		if (config in localConfigs) {
-			loadConfig(config);
-		}
-	});
 
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
@@ -86,14 +77,8 @@
 				<!-- Logo -->
 				<div class="absolute left-0 flex-shrink-0 lg:static">
 					<div class="ml-auto">
-						<select bind:value={$theme}>
-							<option value="system">System</option>
-							<option value="light">Light</option>
-							<option value="dark">Dark</option>
-						</select>
-					</div>
-					<div class="ml-auto">
 						<select on:change={loadConfig}>
+							<option value="">None</option>
 							{#each configs as conf}
 								<option value={conf}>{conf}</option>
 							{/each}
