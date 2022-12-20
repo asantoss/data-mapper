@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: 18
       - run: cd front_end && npm install
-      - run: cd front_end && npm run build && cat $PUBLIC_API_URL
+      - run: cd front_end && npm run build && echo $PUBLIC_API_URL
         env:
           PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
       - name: Setup Pages
