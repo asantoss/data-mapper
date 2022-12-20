@@ -3,6 +3,7 @@
 	import { env as public_env } from '$env/dynamic/public';
 	import { parserStore } from '$lib/stores';
 	import { theme } from '$lib/stores';
+	export const prerender = true;
 	const apiUrl = public_env.PUBLIC_API_URL ?? '';
 	let fileInput: HTMLInputElement;
 	async function handleSubmit(event: Event) {

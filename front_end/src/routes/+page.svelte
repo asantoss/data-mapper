@@ -2,7 +2,7 @@
 	import { parserStore } from '$lib/stores';
 	import Column from '$lib/components/column.svelte';
 	import CustomLayout from '$lib/components/customLayout.svelte';
-
+	export const prerender = true;
 	$: cols = $parserStore.columns.map((e) => e.name);
 </script>
 
