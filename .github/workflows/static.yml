@@ -30,8 +30,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup node
+      - name: Build
         uses: actions/setup-node@v3
+        env:
+          PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
         with:
           node-version: 18
       - run: cd front_end && npm install
