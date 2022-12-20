@@ -69,10 +69,13 @@
 			a.remove(); //afterwards we remove the element again
 		}
 	}
-	function loadConfig(config: string) {
-		const localConfigs = JSON.parse(localStorage.getItem('configs') ?? '{}');
-		const tartgetConf = localConfigs[config];
-		$parserStore.columns = tartgetConf;
+	function loadConfig(event: Event) {
+		if (event.target) {
+			const target = <HTMLInputElement>event.target;
+			const localConfigs = JSON.parse(localStorage.getItem('configs') ?? '{}');
+			const tartgetConf = localConfigs[target.value];
+			$parserStore.columns = tartgetConf;
+		}
 	}
 </script>
 
@@ -90,7 +93,7 @@
 						</select>
 					</div>
 					<div class="ml-auto">
-						<select bind:value={config}>
+						<select on:change={loadConfig}>
 							{#each configs as conf}
 								<option value={conf}>conf </option>
 							{/each}
