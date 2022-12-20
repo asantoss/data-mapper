@@ -7,6 +7,7 @@
 	const apiUrl = public_env.PUBLIC_API_URL ?? '';
 	let fileInput: HTMLInputElement;
 	async function handleSubmit(event: Event) {
+		console.log('API URL', apiUrl);
 		event.preventDefault();
 		if (event.target) {
 			const { files } = <HTMLInputElement>event?.target;
