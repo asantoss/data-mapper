@@ -40,7 +40,7 @@ def read_file(file: UploadFile):
     df = df.fillna('')
     data.close()
     file.file.close()
-    return {"columns": list(df.columns), "rows": list(df.head(5).to_dict('records'))}
+    return {"columns": list(df.columns), "rows": list(df.head(100).to_dict('records'))}
 
 
 @app.post("/file/process")

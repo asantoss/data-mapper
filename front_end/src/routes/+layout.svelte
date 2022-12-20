@@ -95,7 +95,7 @@
 					<div class="ml-auto">
 						<select on:change={loadConfig}>
 							{#each configs as conf}
-								<option value={conf}>conf </option>
+								<option value={conf}>{conf}</option>
 							{/each}
 						</select>
 					</div>
