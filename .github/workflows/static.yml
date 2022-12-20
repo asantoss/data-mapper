@@ -27,6 +27,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -36,9 +38,8 @@ jobs:
         with:
           node-version: 18
       - run: cd front_end && npm install
-      - run: cd front_end && npm run build && echo $PUBLIC_API_URL
-        env:
-          PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
+      - run: cd front_end && npm run build
+
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
