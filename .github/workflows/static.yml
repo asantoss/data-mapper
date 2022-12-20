@@ -35,14 +35,14 @@ jobs:
         with:
           node-version: 18
       - run: cd front_end && npm install
-      - run: cd front_end && npm run deploy
+      - run: cd front_end && npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: './docs'
+          path: 'front_end/build'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
