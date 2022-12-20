@@ -43,9 +43,10 @@
 	}
 	async function handleSaveConfig() {
 		const name = window.prompt('Please type a config name!') ?? 'Name';
-		const configs = JSON.parse(localStorage.getItem('configs') ?? '{}');
-		configs[name] = $parserStore.columns;
-		localStorage.setItem(name, JSON.stringify(configs));
+		const localConfigs = JSON.parse(localStorage.getItem('configs') ?? '{}');
+		localConfigs[name] = $parserStore.columns;
+		localStorage.setItem('configs', JSON.stringify(localConfigs));
+		configs = Object.keys(localConfigs);
 	}
 
 	async function processFile() {
