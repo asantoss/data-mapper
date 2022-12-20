@@ -31,6 +31,7 @@ export type Column = {
 	name: string;
 	value: string;
 	deleted: boolean;
+	drop_dupes: boolean;
 };
 type CSVStore = {
 	columns: Column[];

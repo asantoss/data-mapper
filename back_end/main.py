@@ -48,11 +48,15 @@ def proccess_file(file: UploadFile, data: str = Form()):
     contents = file.file.read()
     body = json.loads(data)
     cols_to_drop = [col["name"] for col in body["columns"] if col["deleted"]]
+    cols_to_dedupe = [col["name"]
+                      for col in body["columns"] if col["drop_dupes"]]
     cols_to_rename = {col['name']: col["value"]
                       for col in body["columns"] if col["name"] != col["value"]}
     file_contents = BytesIO(contents)
     df = pd.read_csv(file_contents)
     df = df.fillna('')
+    for col in cols_to_dedupe:
+        df.drop_duplicates(col, inplace=True)
     df.drop(columns=cols_to_drop, inplace=True)
     df.rename(columns=cols_to_rename, inplace=True)
     file_contents.close()

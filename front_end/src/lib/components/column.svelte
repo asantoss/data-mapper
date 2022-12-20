@@ -1,13 +1,21 @@
 <script lang="ts">
 	import type { Column } from '$lib/stores';
 	import Fa from 'svelte-fa';
-	import { faPencil, faTrash, faSave, faRedo } from '@fortawesome/free-solid-svg-icons';
+	import {
+		faPencil,
+		faTrash,
+		faSave,
+		faRedo,
+		faTimes,
+		faListNumeric
+	} from '@fortawesome/free-solid-svg-icons';
 	import { prevent_default } from 'svelte/internal';
 	let isEditing = false;
 	export let column: Column = {
 		name: '',
 		value: '',
-		deleted: false
+		deleted: false,
+		drop_dupes: false
 	};
 	function toggleEdit(e: Event) {
 		e.preventDefault();
@@ -49,6 +57,13 @@
 					<Fa icon={faRedo} />
 				{:else}
 					<Fa icon={faTrash} />
+				{/if}
+			</button>
+			<button type="button" class="mx-1" on:click={() => (column.drop_dupes = !column.drop_dupes)}>
+				{#if column.drop_dupes}
+					<Fa icon={faTimes} />
+				{:else}
+					<Fa icon={faListNumeric} />
 				{/if}
 			</button>
 		</div>
